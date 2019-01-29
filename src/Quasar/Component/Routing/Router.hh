@@ -11,9 +11,4 @@ class Router
     {
 
     }
-
-    public function addRoute(Route $routeInterface) : void
-    {
-        $this->routes[] = $routeInterface;
-    }
 }

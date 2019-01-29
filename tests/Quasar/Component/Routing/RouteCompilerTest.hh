@@ -3,6 +3,7 @@ namespace Quasar\Component\Routing;
 
 use function Facebook\FBExpect\expect;
 use type Facebook\HackTest\HackTest;
+use type Facebook\HackTest\DataProvider;
 
 class RouteCompilerTest extends HackTest
 {
