@@ -17,11 +17,23 @@ class Route implements \HH\MethodAttribute
     )
     {}
 
+    /**
+     * Return the route pattern.
+     * Parameters route are between brakets {}.
+     * 
+     * @return string The route pattern.
+     */
     public function getPattern() : string
     {
         return $this->pattern;
     }
 
+    /**
+     * Return the parameters regex requirements.
+     * Keys are parameter name (without brackets), value is the regex value.
+     *
+     * @return Map<string, string> The parameters requirements.
+     */
     public function getRequirements() : Map<string, string>
     {
         return $this->requirements;

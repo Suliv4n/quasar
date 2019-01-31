@@ -10,4 +10,10 @@ class MockController
     {
         echo "Hello world";
     }
+
+    <<Route("/route/example2/{slug}")>>
+    public function getOtherAction() : void
+    {
+        echo "Hello friend";
+    }
 }

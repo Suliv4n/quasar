@@ -5,24 +5,39 @@ class AttributeRouteLoader implements RouteLoaderInterface
 {
 
     public function __construct(
-        private Vector<string> $folders
+        private Vector<string> $classes
     )
     {
     }
 
-    private function getClassesFromFolders() : void
+    private function loadRoutesFromClass(string $class) : Vector<Route>
     {
-        foreach ($this->folders as $folder)
+        $routes = Vector{};
+
+        $classReflection = new \ReflectionClass($class);
+        $methods = $classReflection->getMethods();
+
+        foreach ($methods as $method)
         {
-            \var_dump(\file_exists($folder));
+            $route = $method->getAttributeClass(Route::class);
+
+            if ($route !== null)
+            {
+                $routes[] = $route;
+            }
         }
+
+        return $routes;
     }
 
     public function loadRoutes() : Vector<Route>
     {
         $routes = Vector{};
 
-        $this->getClassesFromFolders();
+        foreach ($this->classes as $class) 
+        {
+            $routes->addAll($this->loadRoutesFromClass($class));
+        }
 
         return $routes;
     }

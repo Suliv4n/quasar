@@ -1,19 +1,24 @@
 <?hh //strict
 namespace Quasar\Component\Routing;
 
+use Mock\Controller\MockController;
+
 use function Facebook\FBExpect\expect;
 use type Facebook\HackTest\HackTest;
 
 class AttributeRouteLoaderTest extends HackTest
 {
-    const string MOCK_CONTROLLERS_PATH = __DIR__ . "/../../../Mock/Controller";
 
     public function testLoad() : void
     {
         $loader = new AttributeRouteLoader(Vector{
-            self::MOCK_CONTROLLERS_PATH,
+            MockController::class
         });
 
-        $loader->loadRoutes();
+        $routes = $loader->loadRoutes();
+
+        expect($routes->count())->toBeSame(2);
+        expect($routes[0]->getPattern())->toBeSame("/route/example/{id}");
+        expect($routes[1]->getPattern())->toBeSame("/route/example2/{slug}");
     }
 }
