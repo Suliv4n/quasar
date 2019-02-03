@@ -4,7 +4,9 @@ namespace Quasar\Component\Routing;
 use namespace HH\Lib\Str;
 use namespace HH\Lib\Regex;
 
-
+/**
+ * Object that converts Route into usable CompiledRoute.
+ */
 class RouteCompiler
 {
     const REGEX_DELIMITER = "`";

@@ -10,6 +10,8 @@ class Route implements \HH\MethodAttribute
      * Route constructor.
      * 
      * @param string $pattern The route pattern. The route parameters must be in brackets "{parameter}".
+     * @param Map<string, string> $requirements A map where keys are route parameter names and values
+     * are regex the parameter must match. 
      */
     public function __construct(
         private string $pattern,
