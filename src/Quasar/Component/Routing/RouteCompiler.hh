@@ -4,10 +4,16 @@ namespace Quasar\Component\Routing;
 use namespace HH\Lib\Str;
 use namespace HH\Lib\Regex;
 
+
 class RouteCompiler
 {
     const REGEX_DELIMITER = "`";
 
+    /**
+     * Compile a route. Translate the route pattern to regex.
+     *
+     * @param Route $route The route to compile.
+     */
     public function compile(Route $route) : CompiledRoute
     {
         $regex = $this->compileRegex($route);
@@ -16,21 +22,41 @@ class RouteCompiler
         return $compiledRoute;
     }
 
+    /**
+     * Compile the route pattern to regex et parameters requirements.
+     * 
+     * @param Route $route The route to compile.
+     *
+     * @return string Regex compiled from route pattern and parameters requirements.
+     */
     private function compileRegex(Route $route) : string
     {
         $pattern = $route->getPattern();
-        $regex = $pattern;
+        $regex = "";
 
         $matches = Regex\every_match($pattern, re"/\{(\w+)\}/");
 
+        if (\count($matches) === 0)
+        {
+            return self::REGEX_DELIMITER . \preg_quote($pattern, self::REGEX_DELIMITER) . self::REGEX_DELIMITER;
+        }
+
+        $position = 0;
         foreach($matches as $i => $match)
         {
             $parameter = $match[0];
             $parameterName = $match[1];
 
             $compiledParameter = $this->compileParameter($parameterName, $route->getRequirements());
+            
+            $parameterPosition = \strpos($pattern, $parameter, $position);
+            $regexPart = \substr($pattern, $position, $parameterPosition - $position) 
+                |> \preg_quote($$, self::REGEX_DELIMITER) 
+                |> $$ . $compiledParameter;
 
-            $regex = Str\replace($regex, $parameter, $compiledParameter);
+            $position = $parameterPosition + Str\length($parameter);
+
+            $regex .= $regexPart;
         }
 
         $regex = self::REGEX_DELIMITER . $regex . self::REGEX_DELIMITER;
@@ -38,9 +64,17 @@ class RouteCompiler
         return $regex;
     }
 
+    /**
+     * Compile a route parameter to regex, based on requirements.
+     * 
+     * @param string $parameter The route parameter name to compile.
+     * @param Map<string, string> $requirements The route parameter requirements.
+     * 
+     * @return string The parameter regex. 
+     */
     private function compileParameter(string $parameter, Map<string, string> $requirements) : string
     {
-        $parameterRegex = "(.*)";
+        $parameterRegex = "(.+)";
 
         if ($requirements->containsKey($parameter))
         {
@@ -55,6 +89,13 @@ class RouteCompiler
         return $parameterRegex;
     }
 
+    /**
+     * Check if string is a valid regex.
+     *
+     * @param string $string The string to check.
+     *
+     * @return bool True if the string is a valid refex, else false.
+     */
     private function isValidRegex(string $string) : bool
     {
         /* HH_FIXME[4118] This expression is always true [4118] */

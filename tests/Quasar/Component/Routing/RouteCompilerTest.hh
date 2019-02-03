@@ -31,6 +31,15 @@ class RouteCompilerTest extends HackTest
         ];
     }
 
+    public function provideComplexRoute() : vec<(Route)>
+    {
+        return vec[
+            tuple(new Route("/quasar.php/{id}/post/{slug}", Map{
+                "id" => "\d+",
+            }))
+        ];
+    }
+
     public function provideRouteWithInvalidRequirements() : vec<(Route)>
     {
         return vec[
@@ -59,7 +68,7 @@ class RouteCompilerTest extends HackTest
 
         $regex = $compiledRoute->getRegex();
 
-        expect($regex)->toBeSame("`/quasar/(.*)`");
+        expect($regex)->toBeSame("`/quasar/(.+)`");
     }
 
     <<DataProvider("provideRouteWithRequirements")>>
@@ -78,5 +87,15 @@ class RouteCompilerTest extends HackTest
     {
         $routeCompiler = new RouteCompiler();
         expect(() ==> $routeCompiler->compile($route))->toThrow(\LogicException::class);
+    }
+
+    <<DataProvider("provideComplexRoute")>>
+    public function testComplexRoute(Route $route) : void
+    {
+        $routeCompiler = new RouteCompiler();
+
+        $compiledRoute = $routeCompiler->compile($route);
+
+        expect($compiledRoute->getRegex())->toBeSame("`/quasar\.php/(\d+)/post/(.+)`");
     }
 }
