@@ -8,4 +8,9 @@ class RouteParameter
         private string $name
     )
     {}
+
+    public function getName() : string
+    {
+        return $this->name;
+    }
 }

@@ -95,7 +95,12 @@ class RouteCompilerTest extends HackTest
         $routeCompiler = new RouteCompiler();
 
         $compiledRoute = $routeCompiler->compile($route);
+        $parameters = $compiledRoute->getParameters();
 
         expect($compiledRoute->getRegex())->toBeSame("`/quasar\.php/(\d+)/post/(.+)`");
+        
+        expect($parameters->count())->toBeSame(2);
+        expect($parameters[0]->getName())->toBeSame("id");
+        expect($parameters[1]->getName())->toBeSame("slug");
     }
 }

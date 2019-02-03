@@ -16,8 +16,8 @@ class RouteCompiler
      */
     public function compile(Route $route) : CompiledRoute
     {
-        $regex = $this->compileRegex($route);
-        $compiledRoute = new CompiledRoute($regex);
+        list($regex, $routeParameters) = $this->compileRegex($route);
+        $compiledRoute = new CompiledRoute($regex, $routeParameters);
 
         return $compiledRoute;
     }
@@ -29,7 +29,7 @@ class RouteCompiler
      *
      * @return string Regex compiled from route pattern and parameters requirements.
      */
-    private function compileRegex(Route $route) : string
+    private function compileRegex(Route $route) : (string, Vector<RouteParameter>)
     {
         $pattern = $route->getPattern();
         $regex = "";
@@ -38,10 +38,14 @@ class RouteCompiler
 
         if (\count($matches) === 0)
         {
-            return self::REGEX_DELIMITER . \preg_quote($pattern, self::REGEX_DELIMITER) . self::REGEX_DELIMITER;
+            return tuple(
+                self::REGEX_DELIMITER . \preg_quote($pattern, self::REGEX_DELIMITER) . self::REGEX_DELIMITER,
+                Vector{}
+            );
         }
 
         $position = 0;
+        $routeParameters = Vector{};
         foreach($matches as $i => $match)
         {
             $parameter = $match[0];
@@ -57,11 +61,13 @@ class RouteCompiler
             $position = $parameterPosition + Str\length($parameter);
 
             $regex .= $regexPart;
+
+            $routeParameters[] = new RouteParameter($parameterName);
         }
 
         $regex = self::REGEX_DELIMITER . $regex . self::REGEX_DELIMITER;
 
-        return $regex;
+        return tuple($regex, $routeParameters);
     }
 
     /**
@@ -100,5 +106,11 @@ class RouteCompiler
     {
         /* HH_FIXME[4118] This expression is always true [4118] */
         return @\preg_match($string, "") !== false;
+    }
+
+
+    private function convertRegexCapturingGroupToNonCapturingGroup(string $regex) : string
+    {
+        return $regex;
     }
 }
