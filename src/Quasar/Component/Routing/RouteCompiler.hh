@@ -84,7 +84,11 @@ class RouteCompiler
 
         if ($requirements->containsKey($parameter))
         {
-            $parameterRegex = "(" . $requirements[$parameter] . ")";
+            $parameterRegex = (
+                $requirements[$parameter] 
+                |> $this->replaceRegexCapturingGroupsToNonCapturingGroups($$)
+                |> "(" . $$ . ")"
+            );
         }
 
         if (!$this->isValidRegex(self::REGEX_DELIMITER . $parameterRegex . self::REGEX_DELIMITER))
@@ -109,8 +113,38 @@ class RouteCompiler
     }
 
 
-    private function convertRegexCapturingGroupToNonCapturingGroup(string $regex) : string
+    /**
+     * Replace capturing groups in a regex to non capturing groups (using :?).
+     *
+     * @param string $regex The regex to convert groups.
+     *
+     * @return string The converting regex.
+     */
+    private function replaceRegexCapturingGroupsToNonCapturingGroups(string $regex) : string
     {
+        $length = Str\length($regex);
+        for ($i = 0; $i < $length; ++$i)
+        {
+            if ($regex[$i] === '\\')
+            {
+                ++$i;
+                continue;
+            }
+
+            if ($regex[$i] !== '(' || $length < $i + 2)
+            {
+                continue;
+            }
+
+            if ($regex[++$i] === '*' || $regex[$i] === '?')
+            {
+                ++$i;
+                continue;
+            }
+
+            $regex = \substr_replace($regex, '?:', $i, 0);
+            ++$i;
+        }
         return $regex;
     }
 }
