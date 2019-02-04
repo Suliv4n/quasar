@@ -12,8 +12,9 @@ interface UrlMatcherInterface
      *
      * @param Vector<CompiledRoute> $routes Vector of routes to test.
      * @param string $uri The uri to test.
+     * @param RequestContext The http request context. 
      *
      * @return ?CompiledRoute A route matches the uri, or null if no route match the uri.
      */
-    public function match(Vector<CompiledRoute> $routes, string $uri) : ?CompiledRoute;
+    public function match(Vector<CompiledRoute> $routes, string $uri, RequestContext $requestContext) : ?CompiledRoute;
 }

@@ -38,4 +38,15 @@ class CompiledRoute
     {
         return $this->parameters;
     }
+
+    /**
+     * Set a route parameter value.
+     *
+     * @param int $index the parameter index.
+     * @param string $value The new value of parameter.
+     */
+    public function setParameterValue(int $index, string $value) : void
+    {
+        $this->parameters[$index]->setValue($value);
+    }
 }

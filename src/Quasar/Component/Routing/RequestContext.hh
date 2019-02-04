@@ -13,9 +13,9 @@ class RequestContext
      * @param string $url The request url.
      * @param string $method The request method.
      */
-    private function __construct(
-        private string $url,
-        private string $method
+    public function __construct(
+        private string $method,
+        private string $url
     )
     {}
 
