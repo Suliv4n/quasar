@@ -14,26 +14,31 @@ class UrlMatcherTest extends HackTest
             tuple(
                 Vector{
                     
-                    new CompiledRoute('`/quasar/admin/(\d+)/(.*)`', Vector{
+                    new CompiledRoute('`/quasar/admin/(\d+)/(.*)`', vec["post"], Vector{
                         new RouteParameter("id"),
                         new RouteParameter("slug"),
                     }),
 
-                    new CompiledRoute('`/quasar/comment/(\d+)/`', Vector{
+                    new CompiledRoute('`/quasar/comment/(\d+)/`', vec["get"], Vector{
                         new RouteParameter("id"),
                     }),
 
-                    new CompiledRoute('`/quasar/admin/`', Vector{}),
+                    new CompiledRoute('`/quasar/admin/`', vec["post"], Vector{}),
                     
-                    new CompiledRoute('`/quasar/(\d+)/(.*)`', Vector{
+                    new CompiledRoute('`/quasar/(\d+)/(.*)`', vec["update"], Vector{
                         new RouteParameter("id"),
                         new RouteParameter("slug"),
                     }),
 
-                    new CompiledRoute("`/nope`", Vector{}),
+                    new CompiledRoute('`/quasar/(\d+)/(.*)`', vec["get"], Vector{
+                        new RouteParameter("id"),
+                        new RouteParameter("slug"),
+                    }),
+
+                    new CompiledRoute("`/nope`", vec["get"], Vector{}),
                 },
                 "/quasar/2/hack-is-amazing",
-                new RequestContext("get", "/quasar/2/hack-is-amazing")
+                new RequestContext("GET", "/quasar/2/hack-is-amazing")
             )
         };
     }
@@ -53,6 +58,8 @@ class UrlMatcherTest extends HackTest
         }
 
         expect($route->getRegex())->toBeSame("`/quasar/(\d+)/(.*)`");
+        expect(\count($route->getAllowedMethods()))->toBeSame(1);
+        expect($route->getAllowedMethods()[0])->toBeSame("get");
 
         $parameters = $route->getParameters();
         expect($parameters->count())->toBeSame(2);

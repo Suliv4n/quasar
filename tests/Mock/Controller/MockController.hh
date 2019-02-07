@@ -5,13 +5,13 @@ use Quasar\Component\Routing\Route;
 
 class MockController
 {
-    <<Route("/route/example/{id}")>>
+    <<Route("/route/example/{id}", vec["GET"])>>
     public function getAction() : void
     {
         echo "Hello world";
     }
 
-    <<Route("/route/example2/{slug}")>>
+    <<Route("/route/example2/{slug}", vec["GET", "POST"])>>
     public function getOtherAction() : void
     {
         echo "Hello friend";

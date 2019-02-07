@@ -15,6 +15,7 @@ class CompiledRoute
      */
     public function __construct(
         private string $regex,
+        private vec<string> $methods,
         private Vector<RouteParameter> $parameters
     )
     {}
@@ -37,6 +38,16 @@ class CompiledRoute
     public function getParameters() : Vector<RouteParameter>
     {
         return $this->parameters;
+    }
+
+    /**
+     * Return the allowed http methods of the route.
+     * 
+     * @return Vector<string> The allowed http methods of the route. 
+     */
+    public function getAllowedMethods() : vec<string>
+    {
+        return $this->methods;
     }
 
     /**

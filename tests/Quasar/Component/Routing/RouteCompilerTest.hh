@@ -11,42 +11,57 @@ class RouteCompilerTest extends HackTest
     public function provideSimpleRoute() : vec<(Route)>
     {
         return vec[
-            tuple(new Route("/quasar"))
+            tuple(new Route("/quasar", vec["GET"]))
         ];
     }
 
     public function provideParameteredRoute() : vec<(Route)>
     {
         return vec[
-            tuple(new Route("/quasar/{slug}"))
+            tuple(new Route("/quasar/{slug}", vec["POST", "GET"]))
         ];
     }
 
     public function provideRouteWithRequirements() : vec<(Route)>
     {
         return vec[
-            tuple(new Route("/quasar/{id}", Map{
-                "id" => "\d+",
-            }))
+            tuple(new Route(
+                    "/quasar/{id}",
+                    vec[
+                        "GET"
+                    ],
+                    Map{
+                        "id" => "\d+",
+                    }
+                )
+            )
         ];
     }
 
     public function provideComplexRoute() : vec<(Route)>
     {
         return vec[
-            tuple(new Route("/quasar.{extension}/{id}/post/{slug}", Map{
-                "id" => "\d+",
-                "extension" => "(html|xml|json)"
-            }))
+            tuple(new Route(
+                "/quasar.{extension}/{id}/post/{slug}",
+                vec["GET"], 
+                Map{
+                    "id" => "\d+",
+                    "extension" => "(html|xml|json)"
+                })
+            )
         ];
     }
 
     public function provideRouteWithInvalidRequirements() : vec<(Route)>
     {
         return vec[
-            tuple(new Route("/quasar/{slug}", Map{
-                "slug" => "[a|b",
-            }))
+            tuple(new Route(
+                "/quasar/{slug}", 
+                vec["GET"],
+                Map{
+                    "slug" => "[a|b",
+                })
+            )
         ];
     }
 
@@ -59,6 +74,8 @@ class RouteCompilerTest extends HackTest
         $regex = $compiledRoute->getRegex();
 
         expect($regex)->toBeSame("`/quasar`");
+        expect(\count($compiledRoute->getAllowedMethods()))->toBeSame(1);
+        expect($compiledRoute->getAllowedMethods())->toContain("GET");
     }
 
     <<DataProvider("provideParameteredRoute")>>
@@ -70,6 +87,10 @@ class RouteCompilerTest extends HackTest
         $regex = $compiledRoute->getRegex();
 
         expect($regex)->toBeSame("`/quasar/(.+)`");
+
+        expect(\count($compiledRoute->getAllowedMethods()))->toBeSame(2);
+        expect($compiledRoute->getAllowedMethods())->toContain("GET");
+        expect($compiledRoute->getAllowedMethods())->toContain("POST");
     }
 
     <<DataProvider("provideRouteWithRequirements")>>

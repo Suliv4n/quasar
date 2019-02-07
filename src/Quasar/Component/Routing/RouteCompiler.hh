@@ -19,7 +19,8 @@ class RouteCompiler
     public function compile(Route $route) : CompiledRoute
     {
         list($regex, $routeParameters) = $this->compileRegex($route);
-        $compiledRoute = new CompiledRoute($regex, $routeParameters);
+        $methods = $route->getAllowedMethods();
+        $compiledRoute = new CompiledRoute($regex, $methods, $routeParameters);
 
         return $compiledRoute;
     }

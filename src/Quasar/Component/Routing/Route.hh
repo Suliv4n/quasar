@@ -15,6 +15,7 @@ class Route implements \HH\MethodAttribute
      */
     public function __construct(
         private string $pattern,
+        private vec<string> $methods,
         private Map<string, string> $requirements = Map{},
     )
     {}
@@ -28,6 +29,16 @@ class Route implements \HH\MethodAttribute
     public function getPattern() : string
     {
         return $this->pattern;
+    }
+
+    /**
+     * Return the allowed http methods of the route.
+     * 
+     * @return Vector<string> The allowed http methods of the route. 
+     */
+    public function getAllowedMethods() : vec<string>
+    {
+        return $this->methods;
     }
 
     /**

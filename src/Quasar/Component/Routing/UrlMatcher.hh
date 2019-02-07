@@ -1,6 +1,7 @@
 <?hh //strict
 namespace Quasar\Component\Routing;
 
+use namespace HH\Lib\Str;
 
 class UrlMatcher implements UrlMatcherInterface
 {
@@ -9,11 +10,14 @@ class UrlMatcher implements UrlMatcherInterface
         $matchedRoute = null;
 
         $i = 0;
-        while ($matchedRoute === null && $i++ < $routes->count())
+        while ($matchedRoute === null && $i < $routes->count())
         {
             $route = $routes[$i];
             $matches = Vector{};
-            if (\preg_match($route->getRegex(), $path, &$matches))
+            if (
+                \preg_match($route->getRegex(), $path, &$matches) &&
+                $this->testMethod($route->getAllowedMethods(), $requestContext->getMethod())
+            )
             {
                 $matchedRoute = $route;
                 
@@ -25,8 +29,17 @@ class UrlMatcher implements UrlMatcherInterface
                     }
                 }
             }
+
+            $i++;
         }
 
         return $matchedRoute;
+    }
+
+    private function testMethod(vec<string> $allowedMethods, string $requestMethod) : bool
+    {
+        $allowedMethods = new Vector($allowedMethods);
+        $allowedMethods = $allowedMethods->map(($method) ==> Str\uppercase($method));
+        return $allowedMethods->linearSearch($requestMethod) > -1;
     }
 }
