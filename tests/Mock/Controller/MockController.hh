@@ -5,7 +5,7 @@ use Quasar\Component\Routing\Route;
 
 class MockController
 {
-    <<Route("/route/example/{id}", vec["GET"])>>
+    <<Route("/route/example/{id}", vec["GET"], dict["id" => "\d+"])>>
     public function getAction() : void
     {
         echo "Hello world";

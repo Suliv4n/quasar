@@ -16,7 +16,7 @@ class CompiledRoute
     public function __construct(
         private string $regex,
         private vec<string> $methods,
-        private Vector<RouteParameter> $parameters
+        private vec<RouteParameter> $parameters
     )
     {}
 
@@ -35,7 +35,7 @@ class CompiledRoute
      *
      * @return Vector<RouteParameter> The route parameters.
      */
-    public function getParameters() : Vector<RouteParameter>
+    public function getParameters() : vec<RouteParameter>
     {
         return $this->parameters;
     }

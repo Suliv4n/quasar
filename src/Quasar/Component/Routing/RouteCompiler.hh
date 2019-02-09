@@ -3,6 +3,7 @@ namespace Quasar\Component\Routing;
 
 use namespace HH\Lib\Str;
 use namespace HH\Lib\Regex;
+use namespace HH\Lib\C;
 
 /**
  * Object that converts Route into usable CompiledRoute.
@@ -32,7 +33,7 @@ class RouteCompiler
      *
      * @return string Regex compiled from route pattern and parameters requirements.
      */
-    private function compileRegex(Route $route) : (string, Vector<RouteParameter>)
+    private function compileRegex(Route $route) : (string, vec<RouteParameter>)
     {
         $pattern = $route->getPattern();
         $regex = "";
@@ -43,12 +44,12 @@ class RouteCompiler
         {
             return tuple(
                 self::REGEX_DELIMITER . \preg_quote($pattern, self::REGEX_DELIMITER) . self::REGEX_DELIMITER,
-                Vector{}
+                vec[]
             );
         }
 
         $position = 0;
-        $routeParameters = Vector{};
+        $routeParameters = vec[];
         foreach($matches as $i => $match)
         {
             $parameter = $match[0];
@@ -81,11 +82,11 @@ class RouteCompiler
      * 
      * @return string The parameter regex. 
      */
-    private function compileParameter(string $parameter, Map<string, string> $requirements) : string
+    private function compileParameter(string $parameter, dict<string, string> $requirements) : string
     {
         $parameterRegex = "(.+)";
 
-        if ($requirements->containsKey($parameter))
+        if (C\contains_key($requirements, $parameter))
         {
             $parameterRegex = (
                 $requirements[$parameter] 

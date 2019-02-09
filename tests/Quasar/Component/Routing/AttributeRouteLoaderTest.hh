@@ -11,9 +11,9 @@ class AttributeRouteLoaderTest extends HackTest
 
     public function testLoad() : void
     {
-        $loader = new AttributeRouteLoader(Vector{
+        $loader = new AttributeRouteLoader(vec[
             MockController::class
-        });
+        ]);
 
         $routes = $loader->loadRoutes();
 

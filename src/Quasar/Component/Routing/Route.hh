@@ -16,7 +16,7 @@ class Route implements \HH\MethodAttribute
     public function __construct(
         private string $pattern,
         private vec<string> $methods,
-        private Map<string, string> $requirements = Map{},
+        private dict<string, string> $requirements = dict[],
     )
     {}
 
@@ -47,7 +47,7 @@ class Route implements \HH\MethodAttribute
      *
      * @return Map<string, string> The parameters requirements.
      */
-    public function getRequirements() : Map<string, string>
+    public function getRequirements() : dict<string, string>
     {
         return $this->requirements;
     }

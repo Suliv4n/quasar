@@ -5,6 +5,8 @@ use function Facebook\FBExpect\expect;
 use type Facebook\HackTest\HackTest;
 use type Facebook\HackTest\DataProvider;
 
+use namespace HH\Lib\C;
+
 class RouteCompilerTest extends HackTest
 {
 
@@ -30,9 +32,9 @@ class RouteCompilerTest extends HackTest
                     vec[
                         "GET"
                     ],
-                    Map{
+                    dict[
                         "id" => "\d+",
-                    }
+                    ]
                 )
             )
         ];
@@ -44,10 +46,10 @@ class RouteCompilerTest extends HackTest
             tuple(new Route(
                 "/quasar.{extension}/{id}/post/{slug}",
                 vec["GET"], 
-                Map{
+                dict[
                     "id" => "\d+",
                     "extension" => "(html|xml|json)"
-                })
+                ])
             )
         ];
     }
@@ -58,9 +60,9 @@ class RouteCompilerTest extends HackTest
             tuple(new Route(
                 "/quasar/{slug}", 
                 vec["GET"],
-                Map{
+                dict[
                     "slug" => "[a|b",
-                })
+                ])
             )
         ];
     }
@@ -121,7 +123,7 @@ class RouteCompilerTest extends HackTest
 
         expect($compiledRoute->getRegex())->toBeSame("`/quasar\.((?:html|xml|json))/(\d+)/post/(.+)`");
         
-        expect($parameters->count())->toBeSame(3);
+        expect(C\count($parameters))->toBeSame(3);
         expect($parameters[0]->getName())->toBeSame("extension");
         expect($parameters[1]->getName())->toBeSame("id");
         expect($parameters[2]->getName())->toBeSame("slug");
