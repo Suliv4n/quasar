@@ -3,25 +3,26 @@ namespace Quasar\Component\DependencyInjection;
 
 use HH\Lib\Str;
 
-type ServiceDescriptor = shape(
-    "class" => string,
-    "id" => ?string
-);
-
 class ServicesContainer
 {
     private Vector<ServiceDescriptor> $services = Vector{};
     private Map<string, mixed> $loadedInstance = Map{};
 
-    public function __construct()
+    public function __construct(
+        private bool $autowiring = true
+    )
     {}
 
-    public function set<T>(classname<T> $class, ?string $id = null) : void
+    public function set<T>(classname<T> $class, ?string $id = null, ?bool $autowiring = null) : void
     {
-        $this->services[] = shape(
-            "class" => $class,
-            "id" => $id,
-        );
+        $service = new ServiceDescriptor($class, $id);
+
+        if ($autowiring ?? $this->autowiring)
+        {
+            $service->autowire();
+        }
+
+        $this->services[] = $service;
     }
 
     /**
@@ -31,7 +32,7 @@ class ServicesContainer
      */
     private function getServiceDescriptorsById(string $id) : Vector<ServiceDescriptor>
     {
-        return $this->services->filter($serviceDescriptor ==> $serviceDescriptor === $id);
+        return $this->services->filter($serviceDescriptor ==> $serviceDescriptor->getId() === $id);
     }
 
     private function resolved(string $classname, ?string $id = null) : mixed
@@ -46,8 +47,8 @@ class ServicesContainer
         foreach ($services as $service) 
         {
             if (
-                $service["class"] === $classname ||
-                $reflectionClass->isSubclassOf($service["class"])
+                $service->getServiceClass() === $classname ||
+                $reflectionClass->isSubclassOf($service->getServiceClass())
             )
             {
                 $candidates[] = $service;
@@ -66,8 +67,16 @@ class ServicesContainer
 
         $service = $candidates[0];
 
-        $serviceClass = new \ReflectionClass($service["class"]);
-        $instance = $serviceClass->newInstance();
+        $serviceClass = new \ReflectionClass($service->getServiceClass());
+        $serviceConstructorParameters = $service->getConstructorObjectParameters();
+
+        $arguments = vec[];
+        foreach ($serviceConstructorParameters as $position => $parameter)
+        {
+            $arguments[] = $this->get($parameter);
+        }
+
+        $instance = $serviceClass->newInstanceArgs($arguments);
 
         return $instance;
     }
