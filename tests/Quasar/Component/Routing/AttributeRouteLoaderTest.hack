@@ -1,4 +1,3 @@
-<?hh //strict
 namespace Quasar\Component\Routing;
 
 use Mock\Controller\MockController;

@@ -1,4 +1,3 @@
-<?hh //strict
 namespace Quasar\Component\DependencyInjection;
 
 class ServiceDescriptor

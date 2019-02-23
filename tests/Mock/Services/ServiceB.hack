@@ -1,4 +1,3 @@
-<?hh //strict
 namespace Mock\Services;
 
 class ServiceB

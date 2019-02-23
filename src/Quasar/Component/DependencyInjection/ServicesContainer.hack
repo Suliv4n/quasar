@@ -1,4 +1,3 @@
-<?hh //strict
 namespace Quasar\Component\DependencyInjection;
 
 use HH\Lib\Str;

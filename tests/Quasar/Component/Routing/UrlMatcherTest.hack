@@ -1,4 +1,3 @@
-<?hh //strict
 namespace Quasar\Component\Routing;
 
 use function Facebook\FBExpect\expect;

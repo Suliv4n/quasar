@@ -1,4 +1,3 @@
-<?hh
 namespace Quasar\Component\Routing;
 
 /**
