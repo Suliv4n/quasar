@@ -1,6 +1,6 @@
 namespace Quasar\Component\DependencyInjection;
 
-use Mock\Services\{ServiceA, ServiceB};
+use Mock\Services\{ServiceA, ServiceB, ServiceC};
 use type Facebook\HackTest\HackTest;
 use function Facebook\FBExpect\expect;
 
@@ -24,5 +24,18 @@ class ContainerTest extends HackTest
         $service = $container->get(ServiceB::class);
 
         expect($service)->toBeInstanceOf(ServiceB::class);
+    }
+
+    public function testParameters(): void
+    {
+        $container = new ServicesContainer();
+        $container->set(ServiceC::class);
+        $container->set(ServiceA::class);
+        $container->setParameter("scalarParameter", 1337);
+
+        $service = $container->get(ServiceC::class);
+
+        expect($service)->toBeInstanceOf(ServiceC::class);
+        expect($service->getParameter())->toBeSame(1337);
     }
 }

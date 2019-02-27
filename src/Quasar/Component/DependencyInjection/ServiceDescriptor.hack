@@ -2,7 +2,7 @@ namespace Quasar\Component\DependencyInjection;
 
 class ServiceDescriptor
 {
-    private Map<int, classname<mixed>> $constructorObjectParameters = Map{}; 
+    private Map<int, classname<mixed>> $constructorObjectParameters = Map{};
     private Map<int, string> $constructorScalarParameters = Map{};
 
     public function __construct(
@@ -21,8 +21,17 @@ class ServiceDescriptor
 
         foreach ($contructorParameters as $i => $parameter) 
         {
-            $parameterClass = $parameter->getClass()->getName();
-            $this->constructorObjectParameters[$i] = $parameterClass;
+
+            if ($parameter->getClass() !== null)
+            {
+                $parameterClass = $parameter->getClass()->getName();
+                $this->constructorObjectParameters[$i] = $parameterClass;
+            }
+            else 
+            {
+                $this->constructorScalarParameters[$i] = $parameter->getName();
+            }
+
         }
     }
 
@@ -39,5 +48,17 @@ class ServiceDescriptor
     public function getConstructorObjectParameters(): Map<int, classname<mixed>>
     {
         return $this->constructorObjectParameters;
+    }
+
+    public function getConstructorScalarParameters(): Map<int, string>
+    {
+        return $this->constructorScalarParameters;
+    }
+
+    public function countConstructorParameters(): int
+    {
+        return 
+            $this->constructorObjectParameters->count() + 
+            $this->constructorScalarParameters->count();
     }
 }

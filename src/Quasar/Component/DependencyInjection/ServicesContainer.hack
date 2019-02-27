@@ -1,11 +1,14 @@
 namespace Quasar\Component\DependencyInjection;
 
 use HH\Lib\Str;
+use HH\Lib\C;
+use HH\Lib\Vec;
 
 class ServicesContainer
 {
     private Vector<ServiceDescriptor> $services = Vector{};
     private Map<string, mixed> $loadedInstance = Map{};
+    private Map<string, mixed> $parameters = Map{};
 
     public function __construct(
         private bool $autowiring = true
@@ -67,12 +70,18 @@ class ServicesContainer
         $service = $candidates[0];
 
         $serviceClass = new \ReflectionClass($service->getServiceClass());
-        $serviceConstructorParameters = $service->getConstructorObjectParameters();
+        $arguments = Vec\fill<mixed>($service->countConstructorParameters(), null);
 
-        $arguments = vec[];
+        $serviceConstructorParameters = $service->getConstructorObjectParameters();
         foreach ($serviceConstructorParameters as $position => $parameter)
         {
-            $arguments[] = $this->get($parameter);
+            $arguments[$position] = $this->get($parameter);
+        }
+
+        $serviceConstructorParameters = $service->getConstructorScalarParameters();
+        foreach ($serviceConstructorParameters as $position => $parameter)
+        {
+            $arguments[$position] = $this->getParameter($parameter);
         }
 
         $instance = $serviceClass->newInstanceArgs($arguments);
@@ -80,7 +89,7 @@ class ServicesContainer
         return $instance;
     }
 
-    public function get<T>(classname<T> $classname, ?string $id = null) : T
+    public function get<T>(classname<T> $classname, ?string $id = null): T
     {
         $instance = $this->resolved($classname);
 
@@ -90,5 +99,20 @@ class ServicesContainer
         }
     
         return $instance;
+    }
+
+    public function getParameter(string $name): mixed
+    {
+        if (!C\contains_key($this->parameters, $name))
+        {
+            throw new \Exception("Parameter '%s' not found.");
+        }
+
+        return $this->parameters[$name];
+    }
+
+    public function setParameter(string $name, mixed $value): void
+    {
+        $this->parameters[$name] = $value;
     }
 }
