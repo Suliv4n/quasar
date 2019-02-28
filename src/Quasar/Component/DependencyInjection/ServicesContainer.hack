@@ -4,7 +4,7 @@ use HH\Lib\Str;
 use HH\Lib\C;
 use HH\Lib\Vec;
 
-class ServicesContainer
+class ServicesContainer implements ContainerInterface
 {
     private Vector<ServiceDescriptor> $services = Vector{};
     private Map<string, mixed> $loadedInstance = Map{};
@@ -15,7 +15,7 @@ class ServicesContainer
     )
     {}
 
-    public function set<T>(classname<T> $class, ?string $id = null, ?bool $autowiring = null) : void
+    public function set<T>(classname<T> $class, ?string $id = null, ?bool $autowiring = null): void
     {
         $service = new ServiceDescriptor($class, $id);
 
@@ -26,6 +26,35 @@ class ServicesContainer
 
         $this->services[] = $service;
     }
+
+
+    public function get<T>(classname<T> $classname, ?string $id = null): T
+    {
+        $instance = $this->resolved($classname);
+
+        if (! ($instance instanceof $classname))
+        {
+            throw new \Exception(Str\format("No service of class %s was not found in container.", $classname));
+        }
+    
+        return $instance;
+    }
+
+    public function getParameter(string $name): mixed
+    {
+        if (!C\contains_key($this->parameters, $name))
+        {
+            throw new \Exception("Parameter '%s' not found.");
+        }
+
+        return $this->parameters[$name];
+    }
+
+    public function setParameter(string $name, mixed $value): void
+    {
+        $this->parameters[$name] = $value;
+    }
+
 
     /**
      * Return services descriptor which have the id passed in parameter.
@@ -87,32 +116,5 @@ class ServicesContainer
         $instance = $serviceClass->newInstanceArgs($arguments);
 
         return $instance;
-    }
-
-    public function get<T>(classname<T> $classname, ?string $id = null): T
-    {
-        $instance = $this->resolved($classname);
-
-        if (! ($instance instanceof $classname))
-        {
-            throw new \Exception(Str\format("No service of class %s was not found in container.", $classname));
-        }
-    
-        return $instance;
-    }
-
-    public function getParameter(string $name): mixed
-    {
-        if (!C\contains_key($this->parameters, $name))
-        {
-            throw new \Exception("Parameter '%s' not found.");
-        }
-
-        return $this->parameters[$name];
-    }
-
-    public function setParameter(string $name, mixed $value): void
-    {
-        $this->parameters[$name] = $value;
     }
 }
