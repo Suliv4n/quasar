@@ -1,7 +1,7 @@
 {
     "require": {
-        "hhvm/hhast": "^4.0",
-        "hhvm/hsl": "^4.0"
+        "hhvm/hhast": "^4.1",
+        "hhvm/hsl": "^4.1"
     },
     "require-dev": {
         "hhvm/hacktest": "^1.3",

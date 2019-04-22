@@ -1,4 +1,4 @@
-<?hh
+<?hh //partial
 //We are in partial mode to be abble to access supperglobals, like $_GET, $_POST etc...
 namespace Quasar\Component\Http;
 
