@@ -12,7 +12,7 @@ class AttributeRouteLoader implements RouteLoaderInterface
      * @param Vector<string> $classes Classes where routes will be loaded.
      */
     public function __construct(
-        private vec<string> $classes
+        private vec<classname<mixed>> $classes
     )
     {}
 
