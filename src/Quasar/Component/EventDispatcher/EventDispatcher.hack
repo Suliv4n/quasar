@@ -12,7 +12,7 @@ type EventCallback = shape(
     "priority" => int
 );
 
-class EventDispatcher
+class EventDispatcher implements EventDispatcherInterface
 {
     public function __construct(
         private vec<nonnull> $eventSubscribers,

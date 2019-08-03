@@ -1,6 +1,6 @@
 namespace Quasar\Component\DependencyInjection;
 
-class ServiceDescriptor
+class ServiceDefinition
 {
     private Map<int, classname<mixed>> $constructorObjectParameters = Map{};
     private Map<int, string> $constructorScalarParameters = Map{};

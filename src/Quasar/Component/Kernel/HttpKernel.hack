@@ -1,14 +1,13 @@
 namespace Quasar\Component\Kernel;
 
-use Quasar\Component\Http\{
+use type Quasar\Component\Http\{
     Request,
     Response
 };
-
-use Quasar\Component\Routing\RouterInterface;
-
-use Quasar\Component\DependencyInjection\ContainerInterface;
-
+use type Quasar\Component\Routing\RouterInterface;
+use type Quasar\Component\DependencyInjection\ContainerInterface;
+use type Quasar\Component\EventDispatcher\EventDispatcherInterface;
+use type Quasar\Component\Kernel\Event\RequestEvent;
 
 class HttpKernel
 {
@@ -17,14 +16,16 @@ class HttpKernel
         private string $environment,
         private ContainerInterface $container,
     )
-    {
-    }
+    {}
 
     public function handle(Request $request): Response
     {
         $response = new Response();
 
-        $router = $this->container->get(RouterInterface::class);
+        $eventDispatcher = $this->container->get(EventDispatcherInterface::class);
+
+        $requestEvent = new RequestEvent($request);
+        $eventDispatcher->dispatch($requestEvent);
 
         return $response;
     }

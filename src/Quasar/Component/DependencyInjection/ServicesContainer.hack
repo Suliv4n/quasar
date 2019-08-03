@@ -6,7 +6,7 @@ use HH\Lib\Vec;
 
 class ServicesContainer implements ContainerInterface
 {
-    private Vector<ServiceDescriptor> $services = Vector{};
+    private Vector<ServiceDefinition> $services = Vector{};
     private Map<string, mixed> $loadedInstance = Map{};
     private Map<string, mixed> $parameters = Map{};
 
@@ -17,7 +17,7 @@ class ServicesContainer implements ContainerInterface
 
     public function set<T>(classname<T> $class, ?string $id = null, ?bool $autowiring = null): void
     {
-        $service = new ServiceDescriptor($class, $id);
+        $service = new ServiceDefinition($class, $id);
 
         if ($autowiring ?? $this->autowiring)
         {
@@ -61,16 +61,16 @@ class ServicesContainer implements ContainerInterface
      *
      * @param int $id Id of the service descriptors to return.
      */
-    private function getServiceDescriptorsById(string $id) : Vector<ServiceDescriptor>
+    private function getServiceDefinitionsById(string $id) : Vector<ServiceDefinition>
     {
-        return $this->services->filter($serviceDescriptor ==> $serviceDescriptor->getId() === $id);
+        return $this->services->filter($ServiceDefinition ==> $ServiceDefinition->getId() === $id);
     }
 
     private function resolved(string $classname, ?string $id = null) : mixed
     {
         $instance = null;
 
-        $services = ($id === null ? $this->services : $this->getServiceDescriptorsById($id));
+        $services = ($id === null ? $this->services : $this->getServiceDefinitionsById($id));
         
         $reflectionClass = new \ReflectionClass($classname);
         $candidates = Vector{};
