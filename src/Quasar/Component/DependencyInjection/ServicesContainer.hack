@@ -32,7 +32,7 @@ class ServicesContainer implements ContainerInterface
     {
         $instance = $this->resolved($classname);
 
-        if (! ($instance instanceof $classname))
+        if ($instance is null)
         {
             throw new \Exception(Str\format("No service of class %s was not found in container.", $classname));
         }
@@ -66,7 +66,7 @@ class ServicesContainer implements ContainerInterface
         return $this->services->filter($ServiceDefinition ==> $ServiceDefinition->getId() === $id);
     }
 
-    private function resolved(string $classname, ?string $id = null) : mixed
+    private function resolved<T>(classname<T> $classname, ?string $id = null) : ?T
     {
         $instance = null;
 

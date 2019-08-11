@@ -1,7 +1,9 @@
 namespace Quasar\Component\DependencyInjection;
 
 use Mock\Services\{ServiceA, ServiceB, ServiceC};
+
 use type Facebook\HackTest\HackTest;
+
 use function Facebook\FBExpect\expect;
 
 class ContainerTest extends HackTest
