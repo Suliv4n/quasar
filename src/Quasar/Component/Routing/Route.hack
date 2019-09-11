@@ -1,10 +1,15 @@
 namespace Quasar\Component\Routing;
 
+use type Quasar\Component\Http\ControllerCallback;
+
 /**
  * This class represents an application Route.
  */
 class Route implements \HH\MethodAttribute
 {
+
+    private ?ControllerCallback $controllerCallback;
+
     /**
      * Route constructor.
      * 
@@ -49,5 +54,25 @@ class Route implements \HH\MethodAttribute
     public function getRequirements() : dict<string, string>
     {
         return $this->requirements;
+    }
+
+    /**
+     * Set the controller callback associated to the route.
+     *
+     * @param ControllerCallback The controller callback.
+     */
+    public function setControllerCallback(ControllerCallback $controllerCallback): void
+    {
+        $this->controllerCallback = $controllerCallback;
+    }
+
+    /**
+     * Return the controller callback associated to the route.
+     *
+     * @return ControllerCallback The controller callback.
+     */
+    public function getControllerCallback(): ?ControllerCallback
+    {
+        return $this->controllerCallback;
     }
 }

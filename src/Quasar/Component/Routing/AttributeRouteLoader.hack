@@ -23,7 +23,7 @@ class AttributeRouteLoader implements RouteLoaderInterface
      *
      * @return Vector<Route> Vector of route loaded. 
      */
-    private function loadRoutesFromClass(string $class) : Vector<Route>
+    private function loadRoutesFromClass(classname<mixed> $class) : Vector<Route>
     {
         $routes = Vector{};
 
@@ -34,10 +34,17 @@ class AttributeRouteLoader implements RouteLoaderInterface
         {
             $route = $method->getAttributeClass(Route::class);
 
-            if ($route !== null)
+            if ($route === null)
             {
-                $routes[] = $route;
+                continue;
             }
+
+            $routes[] = $route;
+
+            $route->setControllerCallback(shape(
+                "class" => $class,
+                "method" => $method->getName()
+            ));
         }
 
         return $routes;

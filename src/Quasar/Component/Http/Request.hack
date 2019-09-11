@@ -1,7 +1,15 @@
 namespace Quasar\Component\Http;
 
+type ControllerCallback = shape(
+    "class" => classname<mixed>,
+    "method" => string
+);
+
 class Request
 {
+
+    private ?ControllerCallback $controllerCallback;
+
     public function __construct(
         private ParameterContainer $get,
         private ParameterContainer $post,
@@ -30,5 +38,15 @@ class Request
     public function getPath(): string
     {
         return (string) $this->server->get("REQUEST_URI");
+    }
+
+    public function setControllerCallback(ControllerCallback $controllerCallback): void
+    {
+        $this->controllerCallback = $controllerCallback;
+    }
+
+    public function getControllerCallback(): ?ControllerCallback
+    {
+        return $this->controllerCallback;
     }
 }

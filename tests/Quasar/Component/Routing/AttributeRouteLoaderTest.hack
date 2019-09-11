@@ -19,5 +19,14 @@ class AttributeRouteLoaderTest extends HackTest
         expect($routes->count())->toBeSame(2);
         expect($routes[0]->getPattern())->toBeSame("/route/example/{id}");
         expect($routes[1]->getPattern())->toBeSame("/route/example2/{slug}");
+
+        expect($routes[0]->getControllerCallback())->toNotBeNull();
+        $controllerCallback = $routes[0]->getControllerCallback();
+        
+        invariant($controllerCallback is nonnull, "Controller callback must be not null");
+
+        expect($controllerCallback["class"])->toBeSame(MockController::class);
+        expect($controllerCallback["method"])->toBeSame("getAction");
     }
+
 }
