@@ -14,7 +14,7 @@ class UrlMatcher implements UrlMatcherInterface
             $route = $routes[$i];
             $matches = Vector{};
             if (
-                \preg_match($route->getRegex(), $path, &$matches) &&
+                \preg_match_with_matches($route->getRegex(), $path, inout $matches) &&
                 $this->testMethod($route->getAllowedMethods(), $requestContext->getMethod())
             )
             {
