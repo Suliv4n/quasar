@@ -34,7 +34,7 @@ class ServicesContainer implements ContainerInterface
 
         if ($instance is null)
         {
-            throw new \Exception(Str\format("No service of class %s was not found in container.", $classname));
+            throw new \Exception(Str\format("No service implementing %s was found in container.", $classname));
         }
     
         return $instance;
@@ -79,7 +79,7 @@ class ServicesContainer implements ContainerInterface
         {
             if (
                 $service->getServiceClass() === $classname ||
-                $reflectionClass->isSubclassOf($service->getServiceClass())
+                \is_a($service->getServiceClass(), $classname, true)
             )
             {
                 $candidates[] = $service;
@@ -88,7 +88,7 @@ class ServicesContainer implements ContainerInterface
 
         if ($candidates->count() > 1)
         {
-            throw new \Exception(Str\format("There are multiple services of type %s whith id %s", $classname, $id ?? "no id"));
+            throw new \LogicException(Str\format('There are multiple services of type %s whith id %s', $classname, $id ?? 'no id'));
         }
         else if ($candidates->count() === 0)
         {

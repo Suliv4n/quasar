@@ -1,6 +1,6 @@
 namespace Mock\Services;
 
-abstract class AbstractService
+interface AbstractService
 {
-
+    public function getType(): string;
 }
