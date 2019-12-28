@@ -1,8 +1,6 @@
 namespace Quasar\Component\Routing;
 
-use namespace HH\Lib\Str;
-use namespace HH\Lib\Regex;
-use namespace HH\Lib\C;
+use namespace HH\Lib\{C, Regex, Str};
 
 /**
  * Object that converts Route into usable CompiledRoute.
@@ -27,7 +25,7 @@ class RouteCompiler
 
     /**
      * Compile the route pattern to regex et parameters requirements.
-     * 
+     *
      * @param Route $route The route to compile.
      *
      * @return string Regex compiled from route pattern and parameters requirements.
@@ -49,16 +47,16 @@ class RouteCompiler
 
         $position = 0;
         $routeParameters = vec[];
-        foreach($matches as $i => $match)
+        foreach($matches as $_i => $match)
         {
             $parameter = $match[0];
             $parameterName = $match[1];
 
             $compiledParameter = $this->compileParameter($parameterName, $route->getRequirements());
-            
+
             $parameterPosition = \strpos($pattern, $parameter, $position);
-            $regexPart = \substr($pattern, $position, $parameterPosition - $position) 
-                |> \preg_quote($$, self::REGEX_DELIMITER) 
+            $regexPart = \substr($pattern, $position, $parameterPosition - $position)
+                |> \preg_quote($$, self::REGEX_DELIMITER)
                 |> $$ . $compiledParameter;
 
             $position = $parameterPosition + Str\length($parameter);
@@ -75,11 +73,11 @@ class RouteCompiler
 
     /**
      * Compile a route parameter to regex, based on requirements.
-     * 
+     *
      * @param string $parameter The route parameter name to compile.
      * @param Map<string, string> $requirements The route parameter requirements.
-     * 
-     * @return string The parameter regex. 
+     *
+     * @return string The parameter regex.
      */
     private function compileParameter(string $parameter, dict<string, string> $requirements) : string
     {
@@ -88,7 +86,7 @@ class RouteCompiler
         if (C\contains_key($requirements, $parameter))
         {
             $parameterRegex = (
-                $requirements[$parameter] 
+                $requirements[$parameter]
                 |> $this->replaceRegexCapturingGroupsToNonCapturingGroups($$)
                 |> "(" . $$ . ")"
             );

@@ -1,10 +1,8 @@
 namespace Quasar\Component\EventDispatcher;
 
-use Quasar\Component\EventDispatcher\Attribute\Subscribe;
+use type Quasar\Component\EventDispatcher\Attribute\Subscribe;
 
-use namespace HH\Lib\Vec;
-use namespace HH\Lib\C;
-use namespace HH\Lib\Str;
+use namespace HH\Lib\{C, Str, Vec};
 
 type EventCallback = shape(
     "method" => \ReflectionMethod,
@@ -22,7 +20,7 @@ class EventDispatcher implements EventDispatcherInterface
     public function dispatch(Event $event): void
     {
         $callbacks = $this->compileSubscribers($event);
-        
+
         foreach($callbacks as $callback)
         {
             $callback["method"]->invoke($callback["class"], $event);
@@ -33,7 +31,7 @@ class EventDispatcher implements EventDispatcherInterface
     {
         $callbacks = vec[];
 
-        foreach ($this->eventSubscribers as $subscriber) 
+        foreach ($this->eventSubscribers as $subscriber)
         {
             $reflectionClass = new \ReflectionClass($subscriber);
             $methods = $reflectionClass->getMethods();
@@ -80,7 +78,7 @@ class EventDispatcher implements EventDispatcherInterface
         {
             return;
         }
-        
+
         throw new \LogicException(
             Str\format(
                 "%s is not a valid listener for event of type %s. The method must have only one argument of type %s",

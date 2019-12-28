@@ -19,7 +19,7 @@ class ServiceDefinition
         $contructorParameters = $serviceReflection->getConstructor()?->getParameters() ?? varray[];
 
 
-        foreach ($contructorParameters as $i => $parameter) 
+        foreach ($contructorParameters as $i => $parameter)
         {
 
             if ($parameter->getClass() !== null)
@@ -27,7 +27,7 @@ class ServiceDefinition
                 $parameterClass = $parameter->getClass()->getName();
                 $this->constructorObjectParameters[$i] = $parameterClass;
             }
-            else 
+            else
             {
                 $this->constructorScalarParameters[$i] = $parameter->getName();
             }
@@ -57,8 +57,8 @@ class ServiceDefinition
 
     public function countConstructorParameters(): int
     {
-        return 
-            $this->constructorObjectParameters->count() + 
-            $this->constructorScalarParameters->count();
+        return
+            $this->constructorObjectParameters->count()
+            + $this->constructorScalarParameters->count();
     }
 }

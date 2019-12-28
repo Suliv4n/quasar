@@ -8,7 +8,6 @@ enum HttpStatusCodeEnum: int
     PROCESSING = 102;
     EARLY_HINTS = 103;
 
-    
     //Success
     OK = 200;
     CREATED = 201;
@@ -68,5 +67,4 @@ enum HttpStatusCodeEnum: int
     BAD_GATEWAY = 502;
     SERVICE_UNVAILABLE = 503;
     GATEWAY_TIME_OUT = 504;
-    
 }

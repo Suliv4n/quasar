@@ -1,8 +1,6 @@
 namespace Quasar\Component\DependencyInjection;
 
-use HH\Lib\Str;
-use HH\Lib\C;
-use HH\Lib\Vec;
+use namespace HH\Lib\{C, Str, Vec};
 
 class ServicesContainer implements ContainerInterface
 {
@@ -28,7 +26,7 @@ class ServicesContainer implements ContainerInterface
     }
 
 
-    public function get<T>(classname<T> $classname, ?string $id = null): T
+    public function get<T>(classname<T> $classname, ?string $_id = null): T
     {
         $instance = $this->resolved($classname);
 
@@ -36,7 +34,7 @@ class ServicesContainer implements ContainerInterface
         {
             throw new \Exception(Str\format("No service implementing %s was found in container.", $classname));
         }
-    
+
         return $instance;
     }
 
@@ -71,11 +69,10 @@ class ServicesContainer implements ContainerInterface
         $instance = null;
 
         $services = ($id === null ? $this->services : $this->getServiceDefinitionsById($id));
-        
-        $reflectionClass = new \ReflectionClass($classname);
+
         $candidates = Vector{};
 
-        foreach ($services as $service) 
+        foreach ($services as $service)
         {
             if (
                 $service->getServiceClass() === $classname ||

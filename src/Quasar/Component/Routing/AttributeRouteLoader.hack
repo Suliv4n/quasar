@@ -21,7 +21,7 @@ class AttributeRouteLoader implements RouteLoaderInterface
      *
      * @param string $class The class name from which routes are loaded.
      *
-     * @return Vector<Route> Vector of route loaded. 
+     * @return Vector<Route> Vector of route loaded.
      */
     private function loadRoutesFromClass(classname<mixed> $class) : Vector<Route>
     {
@@ -59,7 +59,7 @@ class AttributeRouteLoader implements RouteLoaderInterface
     {
         $routes = Vector{};
 
-        foreach ($this->classes as $class) 
+        foreach ($this->classes as $class)
         {
             $routes->addAll($this->loadRoutesFromClass($class));
         }

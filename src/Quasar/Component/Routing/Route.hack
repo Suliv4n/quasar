@@ -12,10 +12,10 @@ class Route implements \HH\MethodAttribute
 
     /**
      * Route constructor.
-     * 
+     *
      * @param string $pattern The route pattern. The route parameters must be in brackets "{parameter}".
      * @param Map<string, string> $requirements A map where keys are route parameter names and values
-     * are regex the parameter must match. 
+     * are regex the parameter must match.
      */
     public function __construct(
         private string $pattern,
@@ -27,7 +27,7 @@ class Route implements \HH\MethodAttribute
     /**
      * Return the route pattern.
      * Parameters route are between brakets {}.
-     * 
+     *
      * @return string The route pattern.
      */
     public function getPattern() : string
@@ -37,8 +37,8 @@ class Route implements \HH\MethodAttribute
 
     /**
      * Return the allowed http methods of the route.
-     * 
-     * @return Vector<string> The allowed http methods of the route. 
+     *
+     * @return Vector<string> The allowed http methods of the route.
      */
     public function getAllowedMethods() : vec<string>
     {

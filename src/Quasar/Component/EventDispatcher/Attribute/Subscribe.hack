@@ -1,6 +1,6 @@
 namespace Quasar\Component\EventDispatcher\Attribute;
 
-use Quasar\Component\EventDispatcher\Event;
+use type Quasar\Component\EventDispatcher\Event;
 
 class Subscribe implements \HH\MethodAttribute
 {

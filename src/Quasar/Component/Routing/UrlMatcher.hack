@@ -19,8 +19,8 @@ class UrlMatcher implements UrlMatcherInterface
             )
             {
                 $matchedRoute = $route;
-                
-                foreach ($matches as $index => $match) 
+
+                foreach ($matches as $index => $match)
                 {
                     if ($index > 0)
                     {

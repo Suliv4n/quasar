@@ -10,7 +10,7 @@ class RequestFactory
     {
 
         $server = dict[];
-        
+
         foreach ($_SERVER as $key => $value) {
             $server[$key] = $value;
         }

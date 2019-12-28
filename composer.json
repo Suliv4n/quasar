@@ -1,7 +1,18 @@
 {
+    "name": "Quasar",
+    "description": "HHVM/Hack MVC web framework",
+
+    "authors": [
+        {
+            "name": "Suliv4n",
+            "email": "sulivan.bochant@gmail.com"
+        }
+    ],
+
     "require": {
         "hhvm/hhast": "^4.21",
-        "hhvm/hsl": "^4.15"
+        "hhvm/hsl": "^4.15",
+        "facebook/xhp-lib": "^2.10" 
     },
     "require-dev": {
         "hhvm/hacktest": "^1.6",

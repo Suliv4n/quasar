@@ -4,7 +4,7 @@ class Router implements RouterInterface
 {
     <<__LateInit>>
     private Vector<CompiledRoute> $routes;
-    
+
     public function __construct(
         private RouteLoaderInterface $routeLoader,
         private UrlMatcherInterface $urlMatcher,
@@ -14,7 +14,7 @@ class Router implements RouterInterface
 
     public function loadRoutes(): void
     {
-        $routes = $this->routeLoader->loadRoutes()->map(
+        $this->routeLoader->loadRoutes()->map(
             ($route) ==> $this->routeCompiler->compile($route)
         );
     }

@@ -1,6 +1,6 @@
 namespace Quasar\Component\DependencyInjection;
 
-use HH\Lib\Str;
+use namespace HH\Lib\Str;
 
 class AutowireProcessor implements AutowireProcessorInterface
 {
@@ -22,12 +22,12 @@ class AutowireProcessor implements AutowireProcessorInterface
         $constructorParameters = $constructor?->getParameters() ?? vec[];
 
         $constructorArguments = vec[];
-        foreach ($constructorParameters as $parameter) 
+        foreach ($constructorParameters as $parameter)
         {
             $parameterType = $parameter->getType();
 
             invariant($parameterType is nonnull, "The parameter type can't be null in hacklang.");
-            
+
             if ($parameterType->isBuiltin())
             {
                 $constructorArguments[] = $this->container->getParameter($parameter->getName());

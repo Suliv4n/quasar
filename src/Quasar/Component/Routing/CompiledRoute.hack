@@ -22,7 +22,7 @@ class CompiledRoute
     /**
      * Return the route regex.
      *
-     * @return string The route regex. 
+     * @return string The route regex.
      */
     public function getRegex() : string
     {
@@ -41,8 +41,8 @@ class CompiledRoute
 
     /**
      * Return the allowed http methods of the route.
-     * 
-     * @return Vector<string> The allowed http methods of the route. 
+     *
+     * @return Vector<string> The allowed http methods of the route.
      */
     public function getAllowedMethods() : vec<string>
     {

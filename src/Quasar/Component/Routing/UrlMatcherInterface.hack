@@ -3,7 +3,7 @@ namespace Quasar\Component\Routing;
 /**
  * Url matcher interface.
  */
-interface UrlMatcherInterface 
+interface UrlMatcherInterface
 {
     /**
      * Return a route matches the uri.
@@ -11,7 +11,7 @@ interface UrlMatcherInterface
      *
      * @param Vector<CompiledRoute> $routes Vector of routes to test.
      * @param string $uri The uri to test.
-     * @param RequestContext The http request context. 
+     * @param RequestContext The http request context.
      *
      * @return ?CompiledRoute A route matches the uri, or null if no route match the uri.
      */

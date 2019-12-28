@@ -1,10 +1,9 @@
 namespace Quasar\Component\Controller;
 
-use type Quasar\Component\Http\Request;
-use type Quasar\Component\Http\ControllerCallback;
+use type Quasar\Component\Http\{ControllerCallback, Request};
 use type Quasar\Component\DependencyInjection\AutowireProcessorInterface;
 
-use HH\Lib\Str;
+use namespace HH\Lib\Str;
 
 class ControllerResolver implements ControllerResolverInterface
 {
@@ -38,7 +37,7 @@ class ControllerResolver implements ControllerResolverInterface
      * Create a crontroller instance from a controller callback.
      *
      * @param ControllerCallback The controller callback definition.
-     * 
+     *
      * @return nonnull Controller instance defined in the controller callback.
      */
     private function createController(ControllerCallback $controllerCallback): nonnull
