@@ -5,8 +5,16 @@ use type Quasar\Component\DependencyInjection\AutowireProcessorInterface;
 
 use namespace HH\Lib\Str;
 
+/**
+ * Resolve controllers.
+ */
 class ControllerResolver implements ControllerResolverInterface
 {
+    /**
+     * Constructor.
+     * 
+     * @param AutowireProcessorInterface $autowire Autowire to use for controller creation. 
+     */
     public function __construct(
         private AutowireProcessorInterface $autowire
     )

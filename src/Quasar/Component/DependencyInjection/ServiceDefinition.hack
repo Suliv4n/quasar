@@ -1,13 +1,15 @@
 namespace Quasar\Component\DependencyInjection;
 
-class ServiceDefinition
+class ServiceDefinition<+T as nonnull>
 {
     private Map<int, classname<mixed>> $constructorObjectParameters = Map{};
     private Map<int, string> $constructorScalarParameters = Map{};
+    private vec<(function(T): void)> $calls = vec[];
+    private bool $autowiring = true;
 
     public function __construct(
-        private classname<mixed> $serviceClass,
-        private ?string $id
+        private classname<T> $serviceClass,
+        private ?string $id = null
     )
     {}
 
@@ -60,5 +62,9 @@ class ServiceDefinition
         return
             $this->constructorObjectParameters->count()
             + $this->constructorScalarParameters->count();
+    }
+
+    public function call((function(T): void) $function): void {
+        $this->calls[] = $function; 
     }
 }

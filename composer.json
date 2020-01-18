@@ -1,5 +1,5 @@
 {
-    "name": "Quasar",
+    "name": "quasar/core",
     "description": "HHVM/Hack MVC web framework",
 
     "authors": [
