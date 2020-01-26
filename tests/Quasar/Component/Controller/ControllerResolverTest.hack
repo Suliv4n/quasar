@@ -4,6 +4,7 @@ use type Facebook\HackTest\HackTest;
 use type Quasar\Component\Controller\ControllerResolver;
 use type Quasar\Component\DependencyInjection\AutowireProcessor;
 use type Quasar\Component\DependencyInjection\ServicesContainer;
+use type Quasar\Component\DependencyInjection\ContainerConfiguration;
 
 use type Quasar\Component\Http\Request;
 use type Quasar\Component\Http\ParameterContainer;
@@ -16,9 +17,13 @@ class ControllerResolverTest extends HackTest
 {
     public function testResolve(): void
     {
-        /*$container = new ServicesContainer();
-        $autowire = new AutowireProcessor($container);
-        $controllerResolver = new ControllerResolver($autowire);
+        $autowire = new AutowireProcessor();
+        $containerConfiguration = new ContainerConfiguration();
+        $container = new ServicesContainer($containerConfiguration, $autowire);
+        
+        $controllerResolver = new ControllerResolver(
+            $autowire
+        );
 
         $request = new Request(
             new ParameterContainer(dict[]),
@@ -33,8 +38,8 @@ class ControllerResolverTest extends HackTest
             'method' => 'getAction'
         ));
 
-        $controller = $controllerResolver->resolveController($request);
+        $controller = $controllerResolver->resolveController($request, $container);
 
-        expect($controller)->toBeInstanceOf(MockController::class);*/
+        expect($controller)->toBeInstanceOf(MockController::class);
     }
 }

@@ -11,6 +11,8 @@ use type Quasar\Component\Routing\RouteCompiler;
 
 use type Quasar\Component\EventDispatcher\EventDispatcher;
 
+use type App\Controller\HomeController;
+
 function configureContainer(ServicesContainer $container): void
 {
     $container->set(AttributeRouteLoader::class);
@@ -23,15 +25,25 @@ function configureContainer(ServicesContainer $container): void
 <<__EntryPoint>>
 function main(): noreturn 
 {
+    /*
     $request = RequestFactory::createFromSuperGlobals();
 
     $container = new ServicesContainer();
 
     configureContainer($container);
 
-    $kernel = new HttpKernel("test", $container);
+    $kernel = new HttpKernel("dev", $container);
 
     $response = $kernel->handle($request);
+
+    exit(0);
+    */
+
+    $controller = new HomeController();
+
+    $response = $controller->index();
+
+    $response->send();
 
     exit(0);
 }

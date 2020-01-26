@@ -2,6 +2,7 @@ namespace Quasar\Component\Controller;
 
 use type Quasar\Component\Http\{ControllerCallback, Request};
 use type Quasar\Component\DependencyInjection\AutowireProcessorInterface;
+use type Quasar\Component\DependencyInjection\ContainerInterface;
 
 use namespace HH\Lib\Str;
 
@@ -27,7 +28,7 @@ class ControllerResolver implements ControllerResolverInterface
      *
      * @return mixed The controller instance associated to the request.
      */
-    public function resolveController(Request $request): mixed
+    public function resolveController(Request $request, ContainerInterface $container): mixed
     {
         $controllerCallback = $request->getControllerCallback();
 
@@ -36,7 +37,7 @@ class ControllerResolver implements ControllerResolverInterface
             return null;
         }
 
-        $controller = $this->createController($controllerCallback);
+        $controller = $this->createController($controllerCallback, $container);
 
         return $controller;
     }
@@ -48,7 +49,7 @@ class ControllerResolver implements ControllerResolverInterface
      *
      * @return nonnull Controller instance defined in the controller callback.
      */
-    private function createController(ControllerCallback $controllerCallback): nonnull
+    private function createController(ControllerCallback $controllerCallback, ContainerInterface $container): nonnull
     {
         $controllerClass = $controllerCallback["class"];
         $controllerMethod = $controllerCallback["method"];
@@ -60,9 +61,8 @@ class ControllerResolver implements ControllerResolverInterface
             throw new \LogicException(Str\format("The controller class %s has no method %s.", $controllerClass, $controllerMethod));
         }
 
-        $controllerInstance = $this->autowire->process($controllerClass);
-        invariant($controllerInstance is nonnull, "Controller instance should not ne null.");
+        $controllerArguments = $this->autowire->process($controllerClass, $container);
 
-        return $controllerInstance;
+        return $controllerReflection->newInstanceArgs($controllerArguments);
     }
 }
