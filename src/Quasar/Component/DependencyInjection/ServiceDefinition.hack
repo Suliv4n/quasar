@@ -7,7 +7,7 @@ type ServiceIdentification = shape(
 
 class ServiceDefinition<+T>
 {
-    private vec<(function(T): void)> $calls = vec[];
+    private vec<(function(T): void)> $runAfterInstanciation = vec[];
     private bool $autowired = true;
     private dict<string, ServiceIdentification> $serviceArguments = dict[];
     private dict<string, mixed> $scalarArguments = dict[];
@@ -110,7 +110,7 @@ class ServiceDefinition<+T>
      * 
      * @return void
      */
-    public function call((function(T): void) $closure): void {
-        $this->calls[] = $closure; 
+    public function runAfterInstanciation((function(T): void) $closure): void {
+        $this->runAfterInstanciation[] = $closure; 
     }
 }

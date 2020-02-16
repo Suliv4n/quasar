@@ -29,7 +29,7 @@ class AutowireProcessor implements AutowireProcessorInterface
                 $constructorArguments[] = $container->getParameter($parameter->getName());
             }
             else {
-                $constructorArguments[] = $container->get($classname);
+                $constructorArguments[] = $container->get($parameter->getClass()->getName());
             }
         }
 
