@@ -50,9 +50,9 @@ class ServicesContainer implements ContainerInterface
         $serviceDefinition = $serviceData['serviceDefinition'];
 
         // If instance is already loaded return it.
-        if (\is_a($instance, $classname)) {
+        if (\is_a($instance, $classname, true)) {
             /**
-             * Return type is valid as "is_a($instance, $classname)" is true.
+             * Return type is valid as $instance is a $classname here.
              */
             /* HH_FIXME[4110] Invalid return type */
             return $instance;
@@ -60,7 +60,8 @@ class ServicesContainer implements ContainerInterface
 
         $constructorArguments = vec[];
         if ($serviceDefinition->isAutowired()) {
-            $constructorArguments = $this->autowireProcessor->process($classname, $this);
+            $constructorArguments = $this->autowireProcessor
+                ->process($serviceDefinition->getServiceClass(), $this);
         }
 
         $instance = $this->buildInstanceFromServiceDefinition<T>(
@@ -147,7 +148,7 @@ class ServicesContainer implements ContainerInterface
     ): ServiceData {
         foreach ($this->services as $serviceData) {
             if (
-                $serviceData['classname'] === $classname
+                \is_a($serviceData['classname'], $classname, true)
                 && $serviceData['id'] === $id
             ) {
                 return $serviceData;

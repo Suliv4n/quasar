@@ -39,4 +39,19 @@ class ContainerTest extends HackTest {
 
         expect($service->return42())->toBeSame(42);
     }
+
+    public function testAbstractService(): void {
+        $containerConfiguration = new ContainerConfiguration();
+        $autowireProcessor = new AutowireProcessor();
+
+        $container = new ServicesContainer(
+            $containerConfiguration,
+            $autowireProcessor
+        );
+
+        $container->set<ConcrateService>();
+ 
+        $service = $container->get(AbstractService::class);
+        expect($service)->toBeInstanceOf(ConcrateService::class);
+    }
 }
