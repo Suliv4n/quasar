@@ -11,6 +11,6 @@ class Routing
 
     public function configure(): void {
         $routing = $this->configuration->getServiceDefinition<RouterInterface>();
-        $routing->call((RouterInterface $router) ==> $router->loadRoutes());
+        $routing->runAfterInstanciation((RouterInterface $router) ==> $router->loadRoutes());
     }
 }

@@ -21,6 +21,6 @@ class ParameterContainer
 
     public function has(string $key): bool
     {
-        return C\contains_key($this->parameters, $key);
+        return isset($this->parameters[$key]);
     }
 }

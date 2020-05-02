@@ -10,12 +10,12 @@
     ],
 
     "require": {
-        "hhvm/hhast": "^4.21",
-        "hhvm/hsl": "^4.15",
-        "facebook/xhp-lib": "^2.10" 
+        "hhvm/hhast": "^4.53",
+        "hhvm/hsl": "^4.40",
+        "facebook/xhp-lib": "^3.1" 
     },
     "require-dev": {
-        "hhvm/hacktest": "^1.6",
-        "facebook/fbexpect": "^2.6"
+        "hhvm/hacktest": "^2.1",
+        "facebook/fbexpect": "^2.7"
     }
 }

@@ -83,7 +83,7 @@ class RouteCompiler
     {
         $parameterRegex = "(.+)";
 
-        if (C\contains_key($requirements, $parameter))
+        if (isset($requirements[$parameter]))
         {
             $parameterRegex = (
                 $requirements[$parameter]
@@ -137,7 +137,8 @@ class RouteCompiler
                 continue;
             }
 
-            if ($regex[++$i] === '*' || $regex[$i] === '?')
+            $i += 1;
+            if ($regex[$i] === '*' || $regex[$i] === '?')
             {
                 ++$i;
                 continue;
