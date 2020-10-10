@@ -32,18 +32,15 @@ class ContainerConfiguration {
      * 
      * @return ServiceDifinition
      */
-    public function getServiceDefinition<<<__Enforceable>> reify T as nonnull>(
+    public function getServiceDefinition<<<__Enforceable>> reify T>(
+        classname<T> $serviceClass,
         ?string $id = null
     ): ServiceDefinition<T> {
         foreach ($this->services as $serviceDefinition) {
             if (
-                \is_a($serviceDefinition->getServiceClass(), T::class, true)
+                $serviceDefinition->getServiceClass() is T
                 && ($id === null || $serviceDefinition->getId() === $id)
             ) {
-                /**
-                 * Return type is valid as "is_a($serviceDefinition->getServiceClass(), T::class, true)" is true.
-                 */
-                /* HH_FIXME[4110] Invalid return type */
                 return $serviceDefinition;
             }
         }
@@ -51,7 +48,7 @@ class ContainerConfiguration {
         throw new \LogicException(
             Str\format(
                 'No service of class %s was found.',
-                T::class . ($id is nonnull ?  ' with id ' . $id : ''),
+                $serviceClass . ($id is nonnull ?  ' with id ' . $id : ''),
             )
         );
     }
