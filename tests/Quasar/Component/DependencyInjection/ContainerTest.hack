@@ -1,57 +1,26 @@
-namespace Quasar\Component\DependencyInjection;
+namespace Quasar\Component\DependencyInjection\Test;
 
-use type Mock\Services\{ServiceA, ServiceB, ServiceC, AbstractService, ConcrateService};
+use type Quasar\Component\DependencyInjection\ServicesContainer;
+use type Quasar\Component\DependencyInjection\ServiceBuilder;
+use type Quasar\Component\DependencyInjection\ServiceDefinition;
+use type Fixture\Services\{ServiceA, ServiceB, ServiceC, AbstractService, ConcrateService};
 
 use type Facebook\HackTest\HackTest;
 use function Facebook\FBExpect\expect;
 
 class ContainerTest extends HackTest {
-
-    public function testSimpleService(): void {
-        $containerConfiguration = new ContainerConfiguration();
-        $autowireProcessor = new AutowireProcessor();
-        
+    public function testProvide(): void {
         $container = new ServicesContainer(
-            $containerConfiguration,
-            $autowireProcessor
+            new ServiceBuilder()
         );
 
-        $container->set<ServiceA>();
+        $container->set('service_a', new ServiceDefinition('service_a', ServiceA::class));
 
-        $service = $container->get(ServiceA::class);
+        $service = $container->provide<ServiceA>('service_a');
 
-        expect($service)->toBeInstanceOf(ServiceA::class);
-    }
-
-    public function testAutowiredService(): void {
-        $containerConfiguration = new ContainerConfiguration();
-        $autowireProcessor = new AutowireProcessor();
-
-        $container = new ServicesContainer(
-            $containerConfiguration,
-            $autowireProcessor
+        expect($service)->assertInstanceOf(
+            ServiceA::class,
+            $service
         );
-
-        $container->set<ServiceA>();
-        $container->set<ServiceB>();
-
-        $service = $container->get(ServiceB::class);
-
-        expect($service->return42())->toBeSame(42);
-    }
-
-    public function testAbstractService(): void {
-        $containerConfiguration = new ContainerConfiguration();
-        $autowireProcessor = new AutowireProcessor();
-
-        $container = new ServicesContainer(
-            $containerConfiguration,
-            $autowireProcessor
-        );
-
-        $container->set<ConcrateService>();
- 
-        $service = $container->get(AbstractService::class);
-        expect($service)->toBeInstanceOf(ConcrateService::class);
     }
 }

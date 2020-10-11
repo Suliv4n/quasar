@@ -112,7 +112,7 @@ class RouteCompiler
     private function isValidRegex(string $string) : bool
     {
         $error = null;
-        return \preg_match_all_with_error($string, "", inout $error) is int;
+        return @\preg_match_all_with_error($string, "", inout $error) is int;
     }
 
 

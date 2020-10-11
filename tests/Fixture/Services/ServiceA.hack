@@ -1,4 +1,4 @@
-namespace Mock\Services;
+namespace Fixture\Services;
 
 class ServiceA
 {

@@ -1,9 +1,9 @@
 namespace Quasar\Component\EventDispatcher;
 
-use Mock\Event\{RouteRequestEvent, ResponseEvent};
-use Mock\EventSubscriber\HttpSubscriber;
-use Mock\EventSubscriber\MultipleListenersSubscriber;
-use Mock\EventSubscriber\InvalidListenersSubscriber;
+use Fixture\Event\{RouteRequestEvent, ResponseEvent};
+use Fixture\EventSubscriber\HttpSubscriber;
+use Fixture\EventSubscriber\MultipleListenersSubscriber;
+use Fixture\EventSubscriber\InvalidListenersSubscriber;
 
 
 use type Facebook\HackTest\HackTest;

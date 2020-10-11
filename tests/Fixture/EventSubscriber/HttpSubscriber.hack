@@ -1,10 +1,10 @@
-namespace Mock\EventSubscriber;
+namespace Fixture\EventSubscriber;
 
 use Quasar\Component\EventDispatcher\EventSubscriberInterface;
 use Quasar\Component\EventDispatcher\Event;
 use Quasar\Component\EventDispatcher\Attribute\Subscribe;
 
-use Mock\Event\RouteRequestEvent;
+use Fixture\Event\RouteRequestEvent;
 
 class HttpSubscriber
 {

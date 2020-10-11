@@ -1,6 +1,6 @@
-namespace Mock\EventSubscriber;
+namespace Fixture\EventSubscriber;
 
-use Mock\Event\RouteRequestEvent;
+use Fixture\Event\RouteRequestEvent;
 use Quasar\Component\EventDispatcher\Attribute\Subscribe;
 
 class MultipleListenersSubscriber

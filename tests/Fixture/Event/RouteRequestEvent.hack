@@ -1,4 +1,4 @@
-namespace Mock\Event;
+namespace Fixture\Event;
 
 use Quasar\Component\EventDispatcher\Event;
 

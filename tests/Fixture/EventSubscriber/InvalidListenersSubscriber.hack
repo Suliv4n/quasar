@@ -1,6 +1,6 @@
-namespace Mock\EventSubscriber;
+namespace Fixture\EventSubscriber;
 
-use Mock\Event\{RouteRequestEvent, ResponseEvent};
+use Fixture\Event\{RouteRequestEvent, ResponseEvent};
 use Quasar\Component\EventDispatcher\Attribute\Subscribe;
 
 class InvalidListenersSubscriber
