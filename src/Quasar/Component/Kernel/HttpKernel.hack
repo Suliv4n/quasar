@@ -14,7 +14,7 @@ class HttpKernel
 
     /**
      * Constructor.
-     * 
+     *
      * @param string $environment Kernel environment name.
      * @param ContainerInterface $container The depency injection container.
      */
@@ -26,14 +26,14 @@ class HttpKernel
 
     /**
      * Handle a raquest and return the response.
-     * 
+     *
      * @param Request $request The request to handle.
-     * 
+     *
      * @return ResponsInterface The request's response.
      */
     public function handle(Request $request): ResponseInterface
     {
-        $eventDispatcher = $this->container->get(EventDispatcherInterface::class);
+        $eventDispatcher = $this->container->provide<EventDispatcherInterface>(EventDispatcherInterface::class);
 
         $requestEvent = new RequestEvent($request);
         $eventDispatcher->dispatch($requestEvent);

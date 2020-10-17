@@ -35,7 +35,7 @@ class ServiceBuilder implements ServiceBuilderInterface
 
         $constructorArguments = $this->getConstructorArgumentsValues($definition, $constructor);
 
-        return $classReflection->newInstance(vec[]);
+        return $classReflection->newInstanceArgs($constructorArguments);
     }
 
     private function getConstructorArgumentsValues<T>(
