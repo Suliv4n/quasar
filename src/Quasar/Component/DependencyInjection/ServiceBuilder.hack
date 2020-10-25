@@ -1,8 +1,10 @@
 namespace Quasar\Component\DependencyInjection;
 
 use type Quasar\Component\DependencyInjection\Argument\ArgumentInterface;
-use type Quasar\Component\DependencyInjection\Exception\MissingArgumentException;
-use type Quasar\Component\DependencyInjection\Exception\UnknownArgumentException;
+use type Quasar\Component\DependencyInjection\Exception\{
+  MissingArgumentException,
+  UnknownArgumentException,
+};
 use type ReflectionClass;
 use type ReflectionMethod;
 use type ReflectionParameter;
@@ -14,8 +16,6 @@ class ServiceBuilder implements ServiceBuilderInterface
     public function build(ServiceDefinition<mixed> $definition): mixed {
         $arguments = $definition->getArguments();
 
-        $classname = $definition->getClassname();
-
         $instance = $this->newInstance($definition, $arguments);
 
         return $instance;
@@ -23,7 +23,7 @@ class ServiceBuilder implements ServiceBuilderInterface
 
     private function newInstance<T>(
         ServiceDefinition<T> $definition,
-        darray<string, ArgumentInterface<mixed>>$arguments
+        darray<string, ArgumentInterface<mixed>>$_arguments
     ): T {
         $classReflection = new ReflectionClass($definition->getClassname());
 

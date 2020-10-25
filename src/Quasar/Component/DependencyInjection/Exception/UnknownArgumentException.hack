@@ -1,6 +1,5 @@
 namespace Quasar\Component\DependencyInjection\Exception;
 
-use type LogicException;
 
 use namespace HH\Lib\Str;
 

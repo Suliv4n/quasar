@@ -1,6 +1,5 @@
 namespace Quasar\Component\Http;
 
-use namespace HH\Lib\C;
 
 class ParameterContainer
 {

@@ -1,13 +1,17 @@
 namespace Quasar\Component\DependencyInjection\Test;
 
-use type Quasar\Component\DependencyInjection\ServicesContainer;
-use type Quasar\Component\DependencyInjection\ServiceBuilder;
-use type Quasar\Component\DependencyInjection\ServiceDefinition;
+use type Quasar\Component\DependencyInjection\{
+  ServiceBuilder,
+  ServiceDefinition,
+  ServicesContainer,
+};
 use type Quasar\Component\DependencyInjection\Argument\ServiceArgument;
-use type Fixture\Services\{ServiceA, ServiceB, ServiceC, AbstractService, ConcrateService};
-use type Quasar\Component\DependencyInjection\Exception\MissingArgumentException;
-use type Quasar\Component\DependencyInjection\Exception\NoServiceFoundException;
-use type Quasar\Component\DependencyInjection\Exception\UnknownArgumentException;
+use type Fixture\Services\{ServiceA, ServiceB};
+use type Quasar\Component\DependencyInjection\Exception\{
+  MissingArgumentException,
+  NoServiceFoundException,
+  UnknownArgumentException,
+};
 
 use type Facebook\HackTest\HackTest;
 use function Facebook\FBExpect\expect;

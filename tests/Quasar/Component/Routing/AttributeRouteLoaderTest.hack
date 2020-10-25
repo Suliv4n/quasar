@@ -1,6 +1,6 @@
 namespace Quasar\Component\Routing;
 
-use Fixture\Controller\SimpleController;
+use type Fixture\Controller\SimpleController;
 
 use function Facebook\FBExpect\expect;
 use type Facebook\HackTest\HackTest;

@@ -1,6 +1,6 @@
 namespace Fixture\Event;
 
-use Quasar\Component\EventDispatcher\Event;
+use type Quasar\Component\EventDispatcher\Event;
 
 class ResponseEvent extends Event
 {

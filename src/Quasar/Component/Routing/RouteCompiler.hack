@@ -1,6 +1,6 @@
 namespace Quasar\Component\Routing;
 
-use namespace HH\Lib\{C, Regex, Str};
+use namespace HH\Lib\{Regex, Str};
 
 use type LogicException;
 

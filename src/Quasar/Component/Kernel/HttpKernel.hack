@@ -1,7 +1,6 @@
 namespace Quasar\Component\Kernel;
 
-use type Quasar\Component\Http\Request;
-use type Quasar\Component\Http\ResponseInterface;
+use type Quasar\Component\Http\{Request, ResponseInterface};
 use type Quasar\Component\DependencyInjection\ContainerInterface;
 use type Quasar\Component\EventDispatcher\EventDispatcherInterface;
 use type Quasar\Component\Kernel\Event\RequestEvent;

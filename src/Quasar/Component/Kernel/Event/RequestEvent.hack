@@ -17,8 +17,8 @@ class RequestEvent extends Event
 
     /**
      * Constructor.
-     * 
-     * @param Request $request The received request.  
+     *
+     * @param Request $request The received request.
      */
     public function __construct(
         private Request $request
@@ -26,7 +26,7 @@ class RequestEvent extends Event
 
     /**
      * Get the request received.
-     * 
+     *
      * @return Request
      */
     public function getRequest(): Request
@@ -36,7 +36,7 @@ class RequestEvent extends Event
 
     /**
      * Set the response to send for the received request.
-     * 
+     *
      * @param ResponseInterface $response The response to set.
      */
     public function setResponse(ResponseInterface $response): void
@@ -46,7 +46,7 @@ class RequestEvent extends Event
 
     /**
      * Get the response to send for the received request.
-     * 
+     *
      * @return ResponseInterface
      */
     public function getResponse(): ResponseInterface

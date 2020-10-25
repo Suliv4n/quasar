@@ -11,7 +11,7 @@ class RequestListener
 {
     /**
      * Constructor.
-     * 
+     *
      * @param RouterInterface $router The router to use for requests.
      */
     public function __construct(
@@ -21,7 +21,7 @@ class RequestListener
 
     /**
      * Handle a request received by the kernel.
-     * 
+     *
      * @param RequestEvent $event The request event to handle.
      */
     <<Subscribe(RequestEvent::class)>>

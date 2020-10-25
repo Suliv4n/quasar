@@ -1,10 +1,8 @@
 namespace Fixture\EventSubscriber;
 
-use Quasar\Component\EventDispatcher\EventSubscriberInterface;
-use Quasar\Component\EventDispatcher\Event;
-use Quasar\Component\EventDispatcher\Attribute\Subscribe;
+use type Quasar\Component\EventDispatcher\Attribute\Subscribe;
 
-use Fixture\Event\RouteRequestEvent;
+use type Fixture\Event\RouteRequestEvent;
 
 class HttpSubscriber
 {

@@ -2,14 +2,14 @@ namespace Quasar\Component\DependencyInjection\Argument;
 
 use type Quasar\Component\DependencyInjection\ContainerInterface;
 
-class ServiceArgument<<<__Enforceable>> reify T> implements ArgumentInterface<T> {
+class UndefinedTypeServiceArgument implements ArgumentInterface<mixed> {
     public function __construct(
         private ContainerInterface $container,
         private string $serviceId
     ) {}
 
-    public function getValue(): T {
+    public function getValue(): mixed {
         return $this->container
-            ->provide<T>($this->serviceId);
+            ->provide<mixed>($this->serviceId);
     }
 }

@@ -3,7 +3,6 @@ namespace Quasar\Component\DependencyInjection;
 use type Quasar\Component\DependencyInjection\Exception\NoServiceFoundException;
 use type LogicException;
 
-use function get_class;
 
 use namespace HH\Lib\Str;
 
