@@ -1,6 +1,8 @@
 namespace Quasar\Component\Routing;
 
-use namespace HH\Lib\{C, Regex, Str};
+use namespace HH\Lib\{Regex, Str};
+
+use type LogicException;
 
 /**
  * Object that converts Route into usable CompiledRoute.
@@ -94,7 +96,7 @@ class RouteCompiler
 
         if (!$this->isValidRegex(self::REGEX_DELIMITER . $parameterRegex . self::REGEX_DELIMITER))
         {
-            throw new \LogicException(\sprintf("The regex requirement \"%s\" of parameter %s is not a valid regex.", $parameterRegex, $parameter));
+            throw new LogicException(\sprintf("The regex requirement \"%s\" of parameter %s is not a valid regex.", $parameterRegex, $parameter));
         }
 
         return $parameterRegex;
@@ -109,8 +111,8 @@ class RouteCompiler
      */
     private function isValidRegex(string $string) : bool
     {
-        /* HH_FIXME[4118] This expression is always true [4118] */
-        return @\preg_match($string, "") !== false;
+        $error = null;
+        return @\preg_match_all_with_error($string, "", inout $error) is int;
     }
 
 

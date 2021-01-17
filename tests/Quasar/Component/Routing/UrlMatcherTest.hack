@@ -1,8 +1,7 @@
 namespace Quasar\Component\Routing;
 
 use function Facebook\FBExpect\expect;
-use type Facebook\HackTest\HackTest;
-use type Facebook\HackTest\DataProvider;
+use type Facebook\HackTest\{DataProvider, HackTest};
 
 use namespace HH\Lib\C;
 
@@ -14,7 +13,7 @@ class UrlMatcherTest extends HackTest
         return Vector{
             tuple(
                 Vector{
-                    
+
                     new CompiledRoute('`/quasar/admin/(\d+)/(.*)`', vec["post"], vec[
                         new RouteParameter("id"),
                         new RouteParameter("slug"),
@@ -25,7 +24,7 @@ class UrlMatcherTest extends HackTest
                     ]),
 
                     new CompiledRoute('`/quasar/admin/`', vec["post"], vec[]),
-                    
+
                     new CompiledRoute('`/quasar/(\d+)/(.*)`', vec["update"], vec[
                         new RouteParameter("id"),
                         new RouteParameter("slug"),
