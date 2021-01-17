@@ -6,12 +6,11 @@ use type LogicException;
 
 use namespace HH\Lib\Str;
 
-class ServicesContainer implements ContainerInterface
-{
+class ServiceContainer implements ContainerInterface {
     private darray<string, ServiceDefinition<mixed>> $definitions = darray[];
 
     public function __construct(
-        private ServiceBuilderInterface $serviceBuilder
+        private ServiceBuilderInterface $serviceBuilder,
     ) {}
 
     public function provide<<<__Enforceable>> reify T>(string $id): T {
@@ -29,19 +28,26 @@ class ServicesContainer implements ContainerInterface
                     'Service with id %s is definied to be an instance of %s.
                     Maybe you should fix the generic type of "provide" method call.',
                     $id,
-                    $definition->getClassname()
-                )
+                    $definition->getClassname(),
+                ),
             );
         }
 
         return $service;
     }
 
-    public function set(string $id, ServiceDefinition<mixed> $definition): void {
+    public function set(
+        string $id,
+        ServiceDefinition<mixed> $definition,
+    ): void {
         $this->definitions[$id] = $definition;
     }
 
     public function has(string $id): bool {
         return isset($this->definitions[$id]);
+    }
+
+    public function getDefinitions(): darray<string, ServiceDefinition<mixed>> {
+        return $this->definitions;
     }
 }

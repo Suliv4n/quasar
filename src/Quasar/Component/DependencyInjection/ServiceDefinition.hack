@@ -7,11 +7,29 @@ class ServiceDefinition<T> {
 
     public function __construct(
         private string $id,
-        private classname<T> $serviceClassname
+        private classname<T> $serviceClassname,
+        private bool $autowired = true,
     ) {}
 
-    public function setArguments(darray<string, ArgumentInterface<mixed>> $arguments): void {
+    public function setAutowired(bool $autowired): void {
+        $this->autowired = $autowired;
+    }
+
+    public function isAutowired(): bool {
+        return $this->autowired;
+    }
+
+    public function setArguments(
+        darray<string, ArgumentInterface<mixed>> $arguments,
+    ): void {
         $this->arguments = $arguments;
+    }
+
+    public function addArgument(
+        string $name,
+        ArgumentInterface<mixed> $argument,
+    ): void {
+        $this->arguments[$name] = $argument;
     }
 
     public function getArguments(): darray<string, ArgumentInterface<mixed>> {
@@ -20,5 +38,9 @@ class ServiceDefinition<T> {
 
     public function getClassname(): classname<T> {
         return $this->serviceClassname;
+    }
+
+    public function getId(): string {
+        return $this->id;
     }
 }
