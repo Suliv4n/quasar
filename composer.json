@@ -11,8 +11,8 @@
 
     "require": {
         "hhvm/hhast": "^4.78",
-        "hhvm/hsl": "^4.41",
-        "facebook/xhp-lib": "^4.0" 
+        "hhvm/hsl": "^4.93",
+        "facebook/xhp-lib": "^4.0"
     },
     "require-dev": {
         "hhvm/hacktest": "^2.2",
