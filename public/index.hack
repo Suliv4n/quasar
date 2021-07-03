@@ -2,7 +2,7 @@ require_once(__DIR__  . "/../vendor/hh_autoload.hh");
 
 use type Quasar\Component\Http\RequestFactory;
 use type Quasar\Component\Kernel\HttpKernel;
-use type Quasar\Component\DependencyInjection\ServicesContainer;
+use type Quasar\Component\DependencyInjection\ServiceContainer;
 
 use type Quasar\Component\Routing\Router;
 use type Quasar\Component\Routing\AttributeRouteLoader;
@@ -13,13 +13,9 @@ use type Quasar\Component\EventDispatcher\EventDispatcher;
 
 use type App\Controller\HomeController;
 
-function configureContainer(ServicesContainer $container): void
+function configureContainer(ServiceContainer $container): void
 {
-    $container->set(AttributeRouteLoader::class);
-    $container->set(UrlMatcher::class);
-    $container->set(RouteCompiler::class);
-    $container->set(Router::class);
-    $container->set(EventDispatcher::class);
+
 }
 
 <<__EntryPoint>>
